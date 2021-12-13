@@ -1,6 +1,6 @@
-crunchyroll 1 9.02
-chegg 28 14.95
-car 20 275.74
-spotify 19 5.26
-phone 19 84.04
+bill1 1 23.45
+bill2 28 9.84
+bill3 20 124.67
+bill4 19 8.56
+bill5 19 4.98
 0
