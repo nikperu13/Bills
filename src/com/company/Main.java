@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 
-// ADD TRY CATCH WHERE NECESSARY
-
 public class Main {
 
     private static final Scanner scan = new Scanner(System.in);
@@ -21,21 +19,11 @@ public class Main {
         // *GOAL*
         // read file of accounts with their name, payment day and amount due
         // terminates with "0"
-        // EXAMPLE IN.TXT
-        //        crunchyroll 1 9.02
-        //        chegg 28 14.95
-        //        car 20 275.74
-        //        spotify 19 5.26
-        //        phone 19 84.04
-        //        0
+        //  SEE EXAMPLE "IN.TXT" FILE
+        
 
-
-
-        // could be a global private static but would need a try-catch outside of main!
-        // scanner for file
         Scanner sc = new Scanner(infile);
 
-        //Make an arrayList of the accounts
         List<Account> accounts = new ArrayList<>();
 
         accounts = readFile(sc, accounts);
@@ -50,7 +38,7 @@ public class Main {
     public static void billCalculator(List<Account> accounts){
 
         // ask for dates and separate the month and days from both inputs
-        // *possible move to a method outside of main
+   
         System.out.println("Choose a start date (mmdd)");
         int start, startDay, startMonth;
 
@@ -98,11 +86,10 @@ public class Main {
 
         double totalCost = checkBill(startMonth, startDay, endMonth, endDay, accounts);
 
-        // Two methods to get names for Month
+ 
         String nameStart = monthName(startMonth);
         String nameEnd = monthName(endMonth);
 
-        // use printf to format decimals
         System.out.printf("From "+ nameStart +" "+startDay+" to "+nameEnd+" "+endDay
                 +" , you will pay $%.2f", totalCost);
 
@@ -115,7 +102,6 @@ public class Main {
         double total = 0;
 
         // only calculates bill within a 1-year period!!
-
         if((eM < sM) || (eM == sM && eD <= sD)){
             eM = eM + 12;
         }
@@ -141,7 +127,6 @@ public class Main {
 
             currentAccountTotal =  tempTotal + (x.getCost() * multiplier);
 
-            // printf to format decimals (%.2f)
             System.out.printf("$%.2f for "+ x.getName()+"\n", currentAccountTotal);
 
             sumOfAllAccounts = sumOfAllAccounts + x.getCost();
