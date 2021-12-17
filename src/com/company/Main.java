@@ -11,8 +11,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 
-// ADD TRY CATCH WHERE NECESSARY
-
 public class Main {
 
     private static final Scanner scan = new Scanner(System.in);
