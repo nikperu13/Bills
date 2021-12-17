@@ -1,6 +1,6 @@
 crunchyroll 1 9.02
 chegg 28 14.95
 car 20 275.74
-spotify 19 5.26
+spotify 31 5.26
 phone 19 84.04
 0
