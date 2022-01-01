@@ -4,11 +4,18 @@ public class Account {
     private String name;
     private int date;
     private double cost;
+    private int month = 0;
 
     public Account(String name, int date, double cost) {
         this.name = name;
         this.date = date;
         this.cost = cost;
+    }
+    public Account(String name, int date, double cost, int month) {
+        this.name = name;
+        this.date = date;
+        this.cost = cost;
+        this.month = month;
     }
 
     public String getName() {
@@ -33,6 +40,14 @@ public class Account {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month= month;
     }
 
     public Account(){

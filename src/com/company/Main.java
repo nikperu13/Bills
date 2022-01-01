@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -36,23 +34,26 @@ public class Main {
 
         List<LocalDate> listOfDates = rangeOfBills();
 
-        billCalc2(listOfDates, accounts);
+        billCalc(listOfDates, accounts);
 
         scan.close();
         sc.close();
 
     }
 
-    public static void billCalc2(List<LocalDate> dates, List<Account> accounts){
+    public static void billCalc(List<LocalDate> dates, List<Account> accounts){
 
         double totalBill = 0.0;
-
 
         for (Account account: accounts){
             double accountBill = 0.0;
 
             for(LocalDate date: dates){
-                if(account.getDate() == date.getDayOfMonth()){
+
+                if((account.getDate() == date.getDayOfMonth()) && (account.getMonth() == date.getMonthValue())) {
+                    accountBill += account.getCost();
+                    totalBill += account.getCost();
+                }else if(account.getDate() == date.getDayOfMonth() && account.getMonth() == 0){
                     accountBill += account.getCost();
                     totalBill += account.getCost();
                 }
@@ -76,8 +77,9 @@ public class Main {
     public static List<LocalDate> rangeOfBills() {
 
         boolean notValid = true;
-        LocalDate startDate = null;
-        LocalDate endDate = null;
+        LocalDate startDate;
+        LocalDate endDate;
+        List<LocalDate> dates = new ArrayList<>();
         while(notValid) {
             try {
                 System.out.println("Start Date (mm/dd/yyyy)");
@@ -88,18 +90,18 @@ public class Main {
                 // year/month/dayOfMonth
                 startDate = LocalDate.of(Integer.parseInt(day1.substring(6,10)),Integer.parseInt(day1.substring(0,2)),Integer.parseInt(day1.substring(3,5)));
                 endDate = LocalDate.of(Integer.parseInt(day2.substring(6,10)),Integer.parseInt(day2.substring(0,2)),Integer.parseInt(day2.substring(3,5))+1);
-
+                dates = startDate.datesUntil(endDate).collect(Collectors.toList());
                 notValid = false;
             } catch (Exception e) {
-                System.out.println("Date is invalid, check Exception, must be in format (mm/dd/yyyy)");
-                System.out.println("Ex. 07/02/2020");
-                System.out.println("Error: "+ e);
-
+                System.out.println("Possible errors! Check the following: ");
+                System.out.println("Must be in format (mm/dd/yyyy)... i.e. 07/02/2020");
+                System.out.println("End date is before start date");
+                System.out.println("Exception Error: "+ e);
             }
         }
 
-        // returns List<LocalDate> of dates within the range
-        return startDate.datesUntil(endDate).collect(Collectors.toList());
+        return dates;
+
 
     }
 
@@ -107,26 +109,34 @@ public class Main {
 
         Account account;
 
-        String n = sc.next();
+        String billName = sc.next();
 
-        while(!n.equals("0"))
+        while(!billName.equals("0"))
         {
             // nameBill/dateBill/priceBill
-            account = new Account(n, sc.nextInt(), sc.nextDouble());
-            if(account.getDate() >= 31){
+            try {
+                account = new Account(billName, sc.nextInt(), sc.nextDouble());
+            }catch(Exception e) {
+                // if "special" date (when payment only occurs on a specific day of the year)
+                String[] stringDate = sc.next().split("/");
+                int month = Integer.parseInt(stringDate[0]);
+                int date = Integer.parseInt(stringDate[1]);
+                account = new Account(billName, date, sc.nextDouble(), month);
+            }
+            if(account.getDate() > 28){
                 System.out.println("You're bill date will be changed to the 28th for "+account.getName()+"!");
                 account.setDate(28);
             }
             accounts.add(account);
             // keep reading first string of line until "0"
-            n = sc.next();
+            billName = sc.next();
 
         }
 
         System.out.println("\nYou have the following accounts: ");
         for(Account x : accounts)
         {
-            System.out.println("Name: "+x.getName()+"\t\t Cost: $"+x.getCost()+"\t\t Date: " + x.getDate());
+            System.out.printf("Name: "+x.getName()+"\t\t Cost: $%.2f\t\t Date: " + x.getDate()+"\n", x.getCost());
         }
         System.out.println("=======================================");
 
