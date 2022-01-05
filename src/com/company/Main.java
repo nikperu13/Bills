@@ -2,6 +2,8 @@ package com.company;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -58,18 +60,20 @@ public class Main {
                     totalBill += account.getCost();
                 }
             }
-            System.out.printf("Account Name: "+account.getName()+"\t\t Total paid over period: $%.2f\n", accountBill);
+            if(accountBill!=0){
+                System.out.printf("Account Name: "+account.getName()+"\t\t Total paid over period: $%.2f\n", accountBill);
+            }
         }
 
 
-        // format date
+        // format LocalDate into desired string
         LocalDate start = dates.get(0);
         LocalDate end = dates.get(dates.size()-1);
         String formattedStartDate = start.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
         String formattedEndDate = end.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
 
 
-        System.out.printf("\nFrom "+ formattedStartDate+" to "+ formattedEndDate+" , you will pay $%.2f toward your bills!", totalBill);
+        System.out.printf("\nFrom "+ formattedStartDate+" to "+ formattedEndDate+", you will pay $%.2f toward your bills!", totalBill);
 
 
     }
@@ -84,6 +88,13 @@ public class Main {
             try {
                 System.out.println("Start Date (mm/dd/yyyy)");
                 String day1 = scan.nextLine();
+                if(day1.equalsIgnoreCase("today")){
+                    // today's date in mm/dd/yyyy
+                    // format Date into string
+                    Format f = new SimpleDateFormat("MM/dd/yyyy");
+                    day1 = f.format(new Date());
+                    System.out.println(day1);
+                }
                 System.out.println("End Date (mm/dd/yyyy)");
                 String day2 = scan.nextLine();
 
@@ -136,7 +147,11 @@ public class Main {
         System.out.println("\nYou have the following accounts: ");
         for(Account x : accounts)
         {
-            System.out.printf("Name: "+x.getName()+"\t\t Cost: $%.2f\t\t Date: " + x.getDate()+"\n", x.getCost());
+            if(x.getMonth()!=0){
+                System.out.printf("Name: " + x.getName() + "\t\t Cost: $%.2f\t\t Date: "+ x.getMonth()+"/"+ x.getDate() + "\n", x.getCost());
+            }else {
+                System.out.printf("Name: " + x.getName() + "\t\t Cost: $%.2f\t\t Date: " + x.getDate() + "\n", x.getCost());
+            }
         }
         System.out.println("=======================================");
 
