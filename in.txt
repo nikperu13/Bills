@@ -1,13 +1,13 @@
-BalanceAndBill Cellphone 15 69.01 733.59 46.78
-Bill AmazonBundle 16 11.28
-Balance BestBuy 12 100.00 500.00
-Bill CarInsurance 1/26 816.00
-Bill CarInsurance2 7/26 816.00
-Bill CrunchyRoll 30 9.02
-Bill Mom 5 50.00
-Bill Mom2 12 50.00
-Bill Mom3 19 50.00
-Bill Mom4 26 50.00
+BalanceAndBill B1 15 69.01 733.59 46.78
+Bill B2 16 11.28
+Balance B3 12 100.00 500.00
+Bill B4 1/26 816.00
+Bill B5 7/26 816.00
+Bill B6 30 9.02
+Bill B7 5 50.00
+Bill B7.2 12 50.00
+Bill B7.3 19 50.00
+Bill B7.4 26 50.00
 0
 
 Key
